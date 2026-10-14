@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AahaarTwin — Meal-Response Digital Twin (live API demo)</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; max-width: 860px;
+         margin: 0 auto; padding: 24px 16px 64px; line-height: 1.5; }
+  h1 { font-size: 1.6rem; margin-bottom: 0; }
+  .sub { color: #666; margin-top: 4px; }
+  .card { border: 1px solid #ccc; border-radius: 10px; padding: 16px; margin: 16px 0; }
+  .card h2 { margin-top: 0; font-size: 1.15rem; }
+  label { display: block; margin: 8px 0 2px; font-weight: 600; font-size: .9rem; }
+  input, select { width: 100%; padding: 8px; border: 1px solid #bbb; border-radius: 6px;
+                  box-sizing: border-box; font-size: 1rem; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+  button { background: #1a73e8; color: #fff; border: 0; border-radius: 8px;
+           padding: 10px 18px; font-size: 1rem; cursor: pointer; margin-top: 12px; }
+  button:disabled { opacity: .5; cursor: wait; }
+  .result { background: #f6f9ff; border-radius: 8px; padding: 12px; margin-top: 12px; }
+  @media (prefers-color-scheme: dark) { .result { background: #16202e; } .sub { color: #aaa; } }
+  .big { font-size: 1.8rem; font-weight: 700; }
+  .warn { color: #b06000; font-weight: 600; }
+  .disc { font-size: .82rem; color: #777; border-top: 1px solid #ddd; margin-top: 32px; padding-top: 12px; }
+  table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid #ddd; }
+  .err { color: #b00020; font-weight: 600; }
+  small.hint { color: #777; font-weight: 400; }
+</style>
+</head>
+<body>
+<h1>AahaarTwin</h1>
+<p class="sub">Personalized meal-response digital twin — live serverless demo.
+Predictions are produced by the real trained LightGBM models (population
+boosters, <code>lgbm-population-v1</code>), not mock data.</p>
+
+<div class="card">
+  <h2>1 · Predict one meal</h2>
+  <div class="grid">
+    <div><label>Patient id <small class="hint">(1–45, de-identified)</small></label>
+      <input id="p_pid" type="number" value="7" min="1" max="45"></div>
+    <div><label>Meal time</label>
+      <input id="p_ts" type="datetime-local" value="2026-10-20T13:00"></div>
+    <div><label>Meal type</label>
+      <select id="p_mt"><option>lunch</option><option>breakfast</option>
+        <option>dinner</option><option>snack</option></select></div>
+    <div><label>Pre-meal glucose g0 <small class="hint">(optional)</small></label>
+      <input id="p_g0" type="number" step="any" placeholder="e.g. 110"></div>
+    <div><label>Carbs (g)</label><input id="p_carbs" type="number" step="any" value="80"></div>
+    <div><label>Protein (g)</label><input id="p_protein" type="number" step="any" value="15"></div>
+    <div><label>Fat (g)</label><input id="p_fat" type="number" step="any" value="10"></div>
+    <div><label>Fiber (g)</label><input id="p_fiber" type="number" step="any" value="3"></div>
+    <div><label>Calories</label><input id="p_cal" type="number" step="any" value="470"></div>
+  </div>
+  <button id="btn_predict" onclick="doPredict()">Predict response</button>
+  <div id="out_predict"></div>
+</div>
+
+<div class="card">
+  <h2>2 · Compare candidate meals</h2>
+  <p style="font-size:.9rem">Ranks the three fixed demo meals for the patient above
+  (same pre-meal context). Candidate meals are <b>demonstration examples</b>, not real meals.</p>
+  <button id="btn_rank" onclick="doRank()">Rank demo meals</button>
+  <div id="out_rank"></div>
+</div>
+
+<div class="card">
+  <h2>3 · Measured evaluation (out-of-fold, 1,579 meals)</h2>
+  <div id="out_metrics">Loading…</div>
+</div>
+
+<p class="disc">
+<strong>Research prototype only — not a medical device; not for diagnosis or treatment.</strong><br>
+Predictions are associational model projections, not causal claims. The twin's
+stateful features (drift monitoring, profile updates) live in the full Streamlit
+application (<a href="https://github.com/Suhani-2258/AahaarTwin">GitHub</a>);
+this serverless demo is stateless prediction + ranking only. Dataset: CGMacros
+(PhysioNet, DOI 10.13026/3z8q-x658). Code: MIT.
+</p>
+
+<script>
+const $ = id => document.getElementById(id);
+const num = id => { const v = $(id).value; return v === "" ? null : Number(v); };
+
+async function doPredict() {
+  const btn = $("btn_predict"); btn.disabled = true;
+  $("out_predict").innerHTML = "Predicting…";
+  try {
+    const r = await fetch("/api/predict", { method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        pid: Number($("p_pid").value),
+        ts: $("p_ts").value, meal_type: $("p_mt").value,
+        macros: { carbs: num("p_carbs"), protein: num("p_protein"), fat: num("p_fat"),
+                  fiber: num("p_fiber"), calories: num("p_cal") },
+        premeal: { g0: num("p_g0") } }) });
+    const d = await r.json();
+    if (!r.ok) throw new Error(d.error || r.status);
+    $("out_predict").innerHTML =
+      `<div class="result"><div class="big">${d.pred_iauc.toFixed(1)} mg/dL·h</div>
+       <div>Predicted 2h glucose load · 90% interval
+        [${Math.max(0,d.iauc_lo).toFixed(1)}, ${d.iauc_hi.toFixed(1)}]</div>
+       <div>Predicted peak <b>${d.pred_peak.toFixed(0)} mg/dL</b> ·
+        excursion risk <b>${(d.prob_excursion*100).toFixed(1)}%</b></div>
+       <div>Evidence: <b>${d.evidence_label}</b>
+        ${d.ood_flag ? '<span class="warn"> · out-of-distribution (exploratory)</span>' : ''}</div>
+       <div style="font-size:.85rem;color:#777">model ${d.model_version}</div></div>`;
+  } catch (e) { $("out_predict").innerHTML = `<p class="err">Error: ${e.message}</p>`; }
+  btn.disabled = false;
+}
+
+async function doRank() {
+  const btn = $("btn_rank"); btn.disabled = true;
+  $("out_rank").innerHTML = "Ranking…";
+  const cands = [
+    { label: "White-rice lunch (demo)",
+      macros: { carbs: 80, protein: 15, fat: 10, fiber: 3, calories: 470 } },
+    { label: "Roti + dal + sabzi (demo)",
+      macros: { carbs: 45, protein: 18, fat: 12, fiber: 8, calories: 380 } },
+    { label: "Biryani + raita (demo)",
+      macros: { carbs: 95, protein: 22, fat: 28, fiber: 3, calories: 720 } } ];
+  try {
+    const r = await fetch("/api/rank", { method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ pid: Number($("p_pid").value), ts: $("p_ts").value,
+        meal_type: $("p_mt").value, candidates: cands,
+        premeal: { g0: num("p_g0") } }) });
+    const d = await r.json();
+    if (!r.ok) throw new Error(d.error || r.status);
+    $("out_rank").innerHTML = "<table><tr><th>#</th><th>Meal</th><th>iAUC</th>" +
+      "<th>Peak</th><th>Risk</th><th>Why</th></tr>" +
+      d.results.map(x =>
+        `<tr><td><b>${x.rank}</b></td><td>${x.label}</td>
+         <td>${x.pred_iauc.toFixed(1)}</td><td>${x.pred_peak.toFixed(0)}</td>
+         <td>${(x.prob_excursion*100).toFixed(0)}%</td>
+         <td style="font-size:.82rem">${x.explanation}</td></tr>`).join("") + "</table>";
+  } catch (e) { $("out_rank").innerHTML = `<p class="err">Error: ${e.message}</p>`; }
+  btn.disabled = false;
+}
+
+(async () => {
+  try {
+    const r = await fetch("/api/metrics"); const m = await r.json();
+    const rg = m.regression, cl = m.classification;
+    $("out_metrics").innerHTML = "<table>" +
+      `<tr><td>iAUC MAE (LightGBM)</td><td><b>${rg.iauc.mae.toFixed(2)}</b> mg/dL·h</td></tr>` +
+      `<tr><td>Peak MAE (LightGBM)</td><td><b>${rg.peak.mae.toFixed(2)}</b> mg/dL</td></tr>` +
+      `<tr><td>Excursion PR-AUC / ROC-AUC</td><td><b>${cl.pr_auc.toFixed(3)} / ${cl.roc_auc.toFixed(3)}</b></td></tr>` +
+      `<tr><td>Excursion event rate</td><td>${(cl.event_rate*100).toFixed(1)}%</td></tr>` +
+      "</table><p style='font-size:.82rem;color:#777'>Measured out-of-fold on " +
+      "1,579 meals / 45 patients. Full numbers in the GitHub README.</p>";
+  } catch (e) { $("out_metrics").innerHTML = `<p class="err">Could not load metrics.</p>`; }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+{"functions":{"api/metrics.py":{"maxDuration":10},"api/predict.py":{"maxDuration":10},"api/rank.py":{"maxDuration":10}}}

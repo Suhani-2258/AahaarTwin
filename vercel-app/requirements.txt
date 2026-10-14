@@ -1,0 +1,6 @@
+# Minimal inference deps for the AahaarTwin serverless API.
+# Pinned to the exact versions the boosters were trained/evaluated with.
+# lightgbm pulls numpy + scipy. No pandas/sklearn/streamlit needed here.
+lightgbm==4.7.0
+numpy==1.26.4
+scipy==1.14.1
