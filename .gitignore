@@ -1,0 +1,23 @@
+# Raw data and archives are never committed.
+data/raw/
+*.zip
+
+# Python bytecode and caches
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environment (recreate with: python -m venv .venv && .venv/bin/pip install -r requirements.txt)
+.venv/
+
+# Twin-state runtime database (auto-seeded on first app run from data/processed/meals.csv)
+twin_state.db
+
+# Long-running training logs
+results/train_phase2.log
+
+# Local Streamlit configuration
+.streamlit/
+
+# Derived meal table (regenerable via src/run_phase1.py; kept out of the repo)
+data/processed/
