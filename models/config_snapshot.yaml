@@ -1,0 +1,83 @@
+# AahaarTwin — Phase 2 experiment configuration
+# Model training + evaluation. Hyperparameters are FIXED A PRIORI (documented below);
+# no hyperparameter tuning is performed on test/validation data.
+
+seed: 42
+
+evaluation:
+  # Population models: 5-fold GroupKFold over patients (each patient's meals
+  # appear in exactly one fold's test set). Out-of-fold predictions pooled.
+  cv_folds: 5
+  # Personalization (E1): for each patient, population model trained on the other
+  # 44 patients, fine-tuned on the patient's first 50% time-ordered meals,
+  # evaluated on the last 50%. Compared against the population model on the
+  # SAME test meals (paired comparison).
+  personalization:
+    train_fraction: 0.5
+    bootstrap_resamples: 10000
+    # PRE-REGISTERED decision rule:
+    # claim supported iff win_rate > 0.5 AND bootstrap 95% CI of mean dMAE excludes 0.
+    # Otherwise: null result -> ship the population model, report honestly.
+    rule_win_rate_gt: 0.5
+  # E2 ranking: within-patient Spearman(predicted rank, observed rank) vs
+  # Spearman(carb rank, observed rank) on each patient's held-out test meals.
+  quantile_alphas: [0.05, 0.95]   # prediction intervals for iAUC
+  calibration_bins: 10
+
+lgbm_regression:
+  objective: regression
+  num_leaves: 31
+  learning_rate: 0.05
+  n_estimators: 400
+  min_child_samples: 20
+  subsample: 0.8
+  colsample_bytree: 0.8
+  reg_lambda: 1.0
+  monotone_constraints: "+1 on carbs, 0 elsewhere (sane meal-swap direction)"
+  random_state: 42
+  verbose: -1
+
+lgbm_classifier:
+  objective: binary
+  is_unbalance: true            # 39.5% positive class
+  num_leaves: 31
+  learning_rate: 0.05
+  n_estimators: 400
+  min_child_samples: 20
+  subsample: 0.8
+  colsample_bytree: 0.8
+  reg_lambda: 1.0
+  random_state: 42
+  verbose: -1
+
+lgbm_quantile:
+  objective: quantile
+  num_leaves: 31
+  learning_rate: 0.05
+  n_estimators: 400
+  min_child_samples: 20
+  random_state: 42
+  verbose: -1
+
+lgbm_finetune:                  # per-patient personalization (E1)
+  init_model: "population booster for that patient (trained on other 44)"
+  n_estimators: 100
+  learning_rate: 0.03
+  min_child_samples: 5
+  random_state: 42
+  verbose: -1
+
+operating_point:
+  # Threshold maximizing F1 on POOLED OUT-OF-FOLD probabilities.
+  # Each OOF prediction is out-of-sample, so this selection does not leak.
+  method: "max F1 on pooled OOF predictions (documented)"
+  also_report_fixed_threshold: 0.5
+
+artifacts:
+  dir: "models"
+  files: ["lgbm_iauc.txt", "lgbm_peak.txt", "lgbm_excursion.txt",
+          "lgbm_iauc_q05.txt", "lgbm_iauc_q95.txt",
+          "metrics.json", "metrics_ci.json", "feature_importance.json",
+          "oof_predictions.csv", "calibration.json", "personalization.json",
+          "ranking.json", "config_snapshot.yaml"]
+  note: "The .txt models are FINAL app models trained on ALL usable meals AFTER evaluation. All reported metrics come from cross-validated out-of-fold predictions, never from these final models."

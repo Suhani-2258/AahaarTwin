@@ -1,0 +1,11 @@
+{
+  "method": "conformalized quantile regression (Romano, Patterson & Candes 2019)",
+  "alpha": 0.1,
+  "nominal_coverage": 0.9,
+  "adjustment": 24.039391325465512,
+  "empirical_coverage_oof_after": 0.9005699810006333,
+  "mean_width_after": 119.15305610320397,
+  "n_calibration_points": 1579,
+  "computed_on": "out-of-fold predictions (honest)",
+  "usage": "app interval = [q05(x) - adjustment, q95(x) + adjustment]"
+}
