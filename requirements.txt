@@ -1,0 +1,10 @@
+lightgbm==4.7.0
+matplotlib==3.11.2
+numpy==1.26.4
+pandas==2.1.4
+plotly==7.1.0
+python-pptx==1.0.2
+PyYAML==6.0.3
+scikit-learn==1.9.1
+scipy==1.14.1
+streamlit==1.65.0

@@ -1,0 +1,235 @@
+{
+  "per_patient": [
+    {
+      "pid": 1,
+      "spearman_pred": 0.42556390977443603,
+      "spearman_carb": 0.05962306602547729
+    },
+    {
+      "pid": 2,
+      "spearman_pred": 0.7088235294117646,
+      "spearman_carb": 0.29498653417206555
+    },
+    {
+      "pid": 3,
+      "spearman_pred": 0.8946078431372549,
+      "spearman_carb": 0.6011091691724716
+    },
+    {
+      "pid": 4,
+      "spearman_pred": 0.2691058339894736,
+      "spearman_carb": 0.29911026855915296
+    },
+    {
+      "pid": 5,
+      "spearman_pred": 0.43000976610245334,
+      "spearman_carb": 0.25488329865177484
+    },
+    {
+      "pid": 6,
+      "spearman_pred": 0.37719298245614036,
+      "spearman_carb": 0.274011469393922
+    },
+    {
+      "pid": 7,
+      "spearman_pred": 0.6,
+      "spearman_carb": 0.6108840083916779
+    },
+    {
+      "pid": 8,
+      "spearman_pred": 0.7846153846153847,
+      "spearman_carb": 0.5370247707467546
+    },
+    {
+      "pid": 9,
+      "spearman_pred": 0.2558441558441559,
+      "spearman_carb": 0.4783611499571155
+    },
+    {
+      "pid": 10,
+      "spearman_pred": 0.5142857142857142,
+      "spearman_carb": 0.1770839337979941
+    },
+    {
+      "pid": 11,
+      "spearman_pred": 0.760577915376677,
+      "spearman_carb": 0.21036450151493036
+    },
+    {
+      "pid": 12,
+      "spearman_pred": 0.5794117647058823,
+      "spearman_carb": 0.21418230970574687
+    },
+    {
+      "pid": 13,
+      "spearman_pred": 0.2631578947368421,
+      "spearman_carb": 0.2805638614010497
+    },
+    {
+      "pid": 14,
+      "spearman_pred": 0.6635706914344685,
+      "spearman_carb": 0.5297482802343536
+    },
+    {
+      "pid": 15,
+      "spearman_pred": 0.5395256916996047,
+      "spearman_carb": 0.43288889554175664
+    },
+    {
+      "pid": 16,
+      "spearman_pred": 0.6923076923076923,
+      "spearman_carb": -0.037527959574311584
+    },
+    {
+      "pid": 17,
+      "spearman_pred": 0.7566754954064429,
+      "spearman_carb": 0.6135300426679777
+    },
+    {
+      "pid": 18,
+      "spearman_pred": 0.5121322313873417,
+      "spearman_carb": 0.4345582057148043
+    },
+    {
+      "pid": 19,
+      "spearman_pred": 0.5738492180257728,
+      "spearman_carb": 0.2254326212630911
+    },
+    {
+      "pid": 20,
+      "spearman_pred": 0.4350877192982456,
+      "spearman_carb": 0.33391967210369683
+    },
+    {
+      "pid": 21,
+      "spearman_pred": 0.41052631578947374,
+      "spearman_carb": 0.1866208752073848
+    },
+    {
+      "pid": 22,
+      "spearman_pred": 0.524812030075188,
+      "spearman_carb": 0.4366535704499808
+    },
+    {
+      "pid": 23,
+      "spearman_pred": 0.1533834586466165,
+      "spearman_carb": 0.23396392997339183
+    },
+    {
+      "pid": 26,
+      "spearman_pred": 0.42142857142857143,
+      "spearman_carb": 0.3059038884030279
+    },
+    {
+      "pid": 27,
+      "spearman_pred": 0.5539215686274511,
+      "spearman_carb": 0.4689274277018797
+    },
+    {
+      "pid": 28,
+      "spearman_pred": 0.6323529411764706,
+      "spearman_carb": 0.5225127824686563
+    },
+    {
+      "pid": 29,
+      "spearman_pred": 0.4392857142857142,
+      "spearman_carb": 0.4843098022505682
+    },
+    {
+      "pid": 30,
+      "spearman_pred": 0.8461538461538461,
+      "spearman_carb": -0.09944903161976937
+    },
+    {
+      "pid": 31,
+      "spearman_pred": 0.48480357299151516,
+      "spearman_carb": 0.18112047666380007
+    },
+    {
+      "pid": 32,
+      "spearman_pred": 0.8181818181818182,
+      "spearman_carb": 0.7939401168166961
+    },
+    {
+      "pid": 33,
+      "spearman_pred": 0.5033113945379974,
+      "spearman_carb": 0.20384136217349072
+    },
+    {
+      "pid": 34,
+      "spearman_pred": 0.06695652173913043,
+      "spearman_carb": -0.14855179927399795
+    },
+    {
+      "pid": 35,
+      "spearman_pred": 0.6483516483516484,
+      "spearman_carb": 0.32265685814414063
+    },
+    {
+      "pid": 36,
+      "spearman_pred": 0.8650584330044642,
+      "spearman_carb": 0.3267525552289189
+    },
+    {
+      "pid": 38,
+      "spearman_pred": 0.6508771929824562,
+      "spearman_carb": 0.14280256776982428
+    },
+    {
+      "pid": 39,
+      "spearman_pred": 0.9307175262545413,
+      "spearman_carb": 0.07635520092633998
+    },
+    {
+      "pid": 41,
+      "spearman_pred": 0.6459105707440472,
+      "spearman_carb": 0.16279077738707318
+    },
+    {
+      "pid": 42,
+      "spearman_pred": 0.055048188256318034,
+      "spearman_carb": -0.1902557325164824
+    },
+    {
+      "pid": 43,
+      "spearman_pred": 0.38598290598290597,
+      "spearman_carb": 0.1208905881888558
+    },
+    {
+      "pid": 44,
+      "spearman_pred": 0.393984962406015,
+      "spearman_carb": 0.4608438961162694
+    },
+    {
+      "pid": 45,
+      "spearman_pred": 0.42857142857142855,
+      "spearman_carb": -0.11121188051679713
+    },
+    {
+      "pid": 46,
+      "spearman_pred": 0.8145774754659397,
+      "spearman_carb": 0.008879028776160359
+    },
+    {
+      "pid": 47,
+      "spearman_pred": 0.748883230224939,
+      "spearman_carb": 0.09074664795359148
+    },
+    {
+      "pid": 48,
+      "spearman_pred": 0.3065015479876161,
+      "spearman_carb": 0.3602501844597676
+    },
+    {
+      "pid": 49,
+      "spearman_pred": 0.8065934065934066,
+      "spearman_carb": 0.17016834299382758
+    }
+  ],
+  "summary": {
+    "mean_spearman_pred": 0.5460560378767837,
+    "mean_spearman_carb": 0.27413778967929114,
+    "frac_pred_beats_carb": 0.8222222222222222,
+    "n_patients": 45
+  }
+}

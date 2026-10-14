@@ -1,0 +1,502 @@
+{
+  "data_report": {
+    "participant_csvs_found": 45,
+    "meal_events_raw": 1706,
+    "n_schema_variants": 8,
+    "schema_variant_file_counts": {
+      "Amount Consumed , Calories, Calories (Activity), Carbs, Dexcom GL, Fat, Fiber, HR, Image path, Libre GL, METs, Meal Type, Protein, Unnamed: ": 1,
+      "Amount Consumed, Calories, Calories (Activity), Carbs, Dexcom GL, Fat, Fiber, HR, Image path, Libre GL, METs, Meal Type, Protein, Unnamed: 0": 7,
+      "Amount Consumed, Calories, Carbs, Dexcom GL, Fat, Fiber, HR, Image path, Libre GL, METs, Meal Type, Protein, RecordIndex, Steps": 1,
+      "Amount Consumed, Calories, Calories (Activity), Carbs, Dexcom GL, Fat, Fiber, HR, Image path, Libre GL, METs, Meal Type, Protein": 22,
+      "Amount Consumed, Calories, Calories (Activity), Carbs, Dexcom GL, Fat, Fiber, HR, Image path, Intensity, Libre GL, Meal Type, Protein": 10,
+      "Amount Consumed, Calories, Calories (Activity), Carbs, Dexcom GL, Fat, Fiber, HR, Image path, Libre GL, METs, Meal Type, Protein, Sugar": 1,
+      "Calories, Calories (Activity), Carbs, Dexcom GL, Fat, Fiber, HR, Image path, Libre GL, METs, Meal Type, Protein": 2,
+      "Amount Consumed, Calories, Calories (Activity), Carbs, Dexcom GL, Fat, Fiber, HR, Image path, Intensity, Libre GL, Meal Type, Protein, Unnam": 1
+    },
+    "dedup_dropped_rows": 93,
+    "meal_events_after_dedup": 1613,
+    "usable_meals": 1579,
+    "usable_meals_per_patient": {
+      "min": 17,
+      "median": 36.0,
+      "mean": 35.08888888888889,
+      "max": 52,
+      "n_patients": 45,
+      "patients_with_ge10": 45,
+      "patients_with_ge20": 44
+    },
+    "excursion_rate_peak_ge_180": 0.39455351488283724,
+    "missingness": {
+      "g0": 0.012399256044637322,
+      "hr_mean_2h": 0.03037817730936144,
+      "act_kcal_2h": 0.013639181649101054,
+      "iauc_2h": 0.021078735275883446,
+      "peak_2h": 0.017978921264724116,
+      "carbs": 0.0
+    },
+    "iauc_2h_stats": {
+      "count": 1579.0,
+      "mean": 51.559339244247404,
+      "std": 51.91822857346227,
+      "min": 0.0,
+      "25%": 13.552500000000002,
+      "50%": 36.285,
+      "75%": 74.56416666666667,
+      "max": 346.0833333333333
+    },
+    "peak_2h_stats": {
+      "count": 1579.0,
+      "mean": 178.0386320455985,
+      "std": 52.886108609025,
+      "min": 78.8,
+      "25%": 140.0,
+      "50%": 167.0,
+      "75%": 205.0,
+      "max": 400.0
+    },
+    "carbs_stats": {
+      "count": 1579.0,
+      "mean": 53.08404053198227,
+      "std": 40.411686072755856,
+      "min": 0.0,
+      "25%": 24.0,
+      "50%": 54.0,
+      "75%": 73.0,
+      "max": 761.0
+    }
+  },
+  "splits": {
+    "strategy": "time_ordered_within_patient",
+    "min_meals_per_patient": 10,
+    "train_fraction": 0.5,
+    "n_patients_in_splits": 45,
+    "population_eval": "leave_one_patient_out",
+    "n_lopo_folds": 45,
+    "leakage_checks": "passed (time-ordered + LOPO patient disjointness)"
+  },
+  "baselines": {
+    "n_patients": 45,
+    "mae_patient_mean": 34.03650691404526,
+    "mae_carb_only_linear": 34.207683963258475,
+    "mae_population_linear": 38.22175923179222,
+    "mae_personal_linear": 37.373860971356805,
+    "frac_pop_beats_patient_mean": 0.3333333333333333,
+    "frac_carb_beats_patient_mean": 0.4666666666666667,
+    "frac_personal_beats_population": 0.6666666666666666,
+    "per_patient": [
+      {
+        "pid": 1,
+        "n_train": 19,
+        "n_test": 20,
+        "mae_patient_mean": 10.679723684210526,
+        "mae_carb_only": 10.710497670463111,
+        "mae_population_linear": 33.912564668171186,
+        "mae_personal_linear": 10.817404586534538
+      },
+      {
+        "pid": 2,
+        "n_train": 15,
+        "n_test": 16,
+        "mae_patient_mean": 42.297923611111116,
+        "mae_carb_only": 40.76521698384855,
+        "mae_population_linear": 51.05422366165676,
+        "mae_personal_linear": 53.49314129962228
+      },
+      {
+        "pid": 3,
+        "n_train": 17,
+        "n_test": 17,
+        "mae_patient_mean": 45.60750288350635,
+        "mae_carb_only": 33.77011082062951,
+        "mae_population_linear": 29.023732715346284,
+        "mae_personal_linear": 44.64474407944316
+      },
+      {
+        "pid": 4,
+        "n_train": 26,
+        "n_test": 26,
+        "mae_patient_mean": 25.264033530571986,
+        "mae_carb_only": 23.514924701097645,
+        "mae_population_linear": 30.769489301589733,
+        "mae_personal_linear": 20.729967680360037
+      },
+      {
+        "pid": 5,
+        "n_train": 21,
+        "n_test": 21,
+        "mae_patient_mean": 21.94097127739985,
+        "mae_carb_only": 21.42674178769412,
+        "mae_population_linear": 29.32873927014786,
+        "mae_personal_linear": 20.611128606268327
+      },
+      {
+        "pid": 6,
+        "n_train": 18,
+        "n_test": 19,
+        "mae_patient_mean": 19.075175438596485,
+        "mae_carb_only": 19.831374574177136,
+        "mae_population_linear": 27.45507876487297,
+        "mae_personal_linear": 19.74596532640018
+      },
+      {
+        "pid": 7,
+        "n_train": 8,
+        "n_test": 9,
+        "mae_patient_mean": 26.30060185185185,
+        "mae_carb_only": 19.052841600374357,
+        "mae_population_linear": 22.296987352811886,
+        "mae_personal_linear": 39.49696958316698
+      },
+      {
+        "pid": 8,
+        "n_train": 14,
+        "n_test": 14,
+        "mae_patient_mean": 25.944404761904764,
+        "mae_carb_only": 19.13546291761958,
+        "mae_population_linear": 29.00068520994529,
+        "mae_personal_linear": 23.214826945779862
+      },
+      {
+        "pid": 9,
+        "n_train": 20,
+        "n_test": 21,
+        "mae_patient_mean": 10.512777777777778,
+        "mae_carb_only": 12.355802650407318,
+        "mae_population_linear": 36.437872149093224,
+        "mae_personal_linear": 11.260219810588945
+      },
+      {
+        "pid": 10,
+        "n_train": 20,
+        "n_test": 21,
+        "mae_patient_mean": 24.1446626984127,
+        "mae_carb_only": 25.579150552830903,
+        "mae_population_linear": 29.07494589282328,
+        "mae_personal_linear": 27.151111358681284
+      },
+      {
+        "pid": 11,
+        "n_train": 18,
+        "n_test": 18,
+        "mae_patient_mean": 25.39317901234568,
+        "mae_carb_only": 34.906093131523235,
+        "mae_population_linear": 27.98630937216966,
+        "mae_personal_linear": 37.81319318020686
+      },
+      {
+        "pid": 12,
+        "n_train": 16,
+        "n_test": 16,
+        "mae_patient_mean": 40.75498697916667,
+        "mae_carb_only": 38.75847466287497,
+        "mae_population_linear": 42.639165318929116,
+        "mae_personal_linear": 39.959959564406944
+      },
+      {
+        "pid": 13,
+        "n_train": 19,
+        "n_test": 19,
+        "mae_patient_mean": 19.920258541089567,
+        "mae_carb_only": 19.99681502766422,
+        "mae_population_linear": 32.90862486572661,
+        "mae_personal_linear": 13.226572110044607
+      },
+      {
+        "pid": 14,
+        "n_train": 18,
+        "n_test": 18,
+        "mae_patient_mean": 35.803148148148146,
+        "mae_carb_only": 27.940873030454387,
+        "mae_population_linear": 31.921477787591,
+        "mae_personal_linear": 28.318329039506736
+      },
+      {
+        "pid": 15,
+        "n_train": 22,
+        "n_test": 23,
+        "mae_patient_mean": 20.57782279314888,
+        "mae_carb_only": 19.266939536056253,
+        "mae_population_linear": 31.66106860810161,
+        "mae_personal_linear": 16.207360447518507
+      },
+      {
+        "pid": 16,
+        "n_train": 13,
+        "n_test": 14,
+        "mae_patient_mean": 24.793562271062275,
+        "mae_carb_only": 25.244819140109932,
+        "mae_population_linear": 24.533855213972807,
+        "mae_personal_linear": 71.82784771553268
+      },
+      {
+        "pid": 17,
+        "n_train": 20,
+        "n_test": 20,
+        "mae_patient_mean": 23.472175,
+        "mae_carb_only": 20.02003474870069,
+        "mae_population_linear": 26.765979904702697,
+        "mae_personal_linear": 21.91128107079748
+      },
+      {
+        "pid": 18,
+        "n_train": 18,
+        "n_test": 18,
+        "mae_patient_mean": 30.792736625514394,
+        "mae_carb_only": 29.94484653844149,
+        "mae_population_linear": 29.044699773314,
+        "mae_personal_linear": 28.950576855993727
+      },
+      {
+        "pid": 19,
+        "n_train": 22,
+        "n_test": 22,
+        "mae_patient_mean": 20.99432506887052,
+        "mae_carb_only": 20.907550816263093,
+        "mae_population_linear": 29.448161205189304,
+        "mae_personal_linear": 21.566218247361988
+      },
+      {
+        "pid": 20,
+        "n_train": 19,
+        "n_test": 19,
+        "mae_patient_mean": 31.749108956602036,
+        "mae_carb_only": 31.813818743436407,
+        "mae_population_linear": 34.18958674488037,
+        "mae_personal_linear": 30.116802268371192
+      },
+      {
+        "pid": 21,
+        "n_train": 18,
+        "n_test": 19,
+        "mae_patient_mean": 31.712066276803117,
+        "mae_carb_only": 30.388871930677936,
+        "mae_population_linear": 39.66180143534293,
+        "mae_personal_linear": 27.389573258966767
+      },
+      {
+        "pid": 22,
+        "n_train": 19,
+        "n_test": 20,
+        "mae_patient_mean": 18.95386842105263,
+        "mae_carb_only": 17.283367314998507,
+        "mae_population_linear": 26.101492871942476,
+        "mae_personal_linear": 14.132879921578724
+      },
+      {
+        "pid": 23,
+        "n_train": 20,
+        "n_test": 20,
+        "mae_patient_mean": 41.174208333333326,
+        "mae_carb_only": 42.02578947065381,
+        "mae_population_linear": 37.46144898952899,
+        "mae_personal_linear": 53.724927285210114
+      },
+      {
+        "pid": 26,
+        "n_train": 15,
+        "n_test": 15,
+        "mae_patient_mean": 30.584311111111113,
+        "mae_carb_only": 31.434874790820494,
+        "mae_population_linear": 30.40448406930705,
+        "mae_personal_linear": 27.691876401257456
+      },
+      {
+        "pid": 27,
+        "n_train": 16,
+        "n_test": 17,
+        "mae_patient_mean": 30.80180759803922,
+        "mae_carb_only": 24.712153043285554,
+        "mae_population_linear": 31.048440989999026,
+        "mae_personal_linear": 25.049166015009625
+      },
+      {
+        "pid": 28,
+        "n_train": 16,
+        "n_test": 16,
+        "mae_patient_mean": 39.16380208333334,
+        "mae_carb_only": 34.38985449920857,
+        "mae_population_linear": 31.635240107455225,
+        "mae_personal_linear": 38.80030416231779
+      },
+      {
+        "pid": 29,
+        "n_train": 14,
+        "n_test": 15,
+        "mae_patient_mean": 20.68166666666667,
+        "mae_carb_only": 25.65449971402802,
+        "mae_population_linear": 17.969165782685202,
+        "mae_personal_linear": 27.20478445607905
+      },
+      {
+        "pid": 30,
+        "n_train": 13,
+        "n_test": 14,
+        "mae_patient_mean": 65.29261904761906,
+        "mae_carb_only": 75.39170344711745,
+        "mae_population_linear": 70.35315119457253,
+        "mae_personal_linear": 98.90877393009278
+      },
+      {
+        "pid": 31,
+        "n_train": 23,
+        "n_test": 23,
+        "mae_patient_mean": 19.02350661625709,
+        "mae_carb_only": 22.856008469033817,
+        "mae_population_linear": 32.575746687959146,
+        "mae_personal_linear": 26.71814863069705
+      },
+      {
+        "pid": 32,
+        "n_train": 10,
+        "n_test": 10,
+        "mae_patient_mean": 15.327466666666666,
+        "mae_carb_only": 14.05840386822706,
+        "mae_population_linear": 23.58283862169671,
+        "mae_personal_linear": 22.14981359145343
+      },
+      {
+        "pid": 33,
+        "n_train": 16,
+        "n_test": 16,
+        "mae_patient_mean": 63.225625,
+        "mae_carb_only": 63.90216571515337,
+        "mae_population_linear": 68.50099274418247,
+        "mae_personal_linear": 54.029555800244744
+      },
+      {
+        "pid": 34,
+        "n_train": 23,
+        "n_test": 24,
+        "mae_patient_mean": 13.709607487922703,
+        "mae_carb_only": 16.217170847780302,
+        "mae_population_linear": 34.30583413467437,
+        "mae_personal_linear": 17.400112841626836
+      },
+      {
+        "pid": 35,
+        "n_train": 13,
+        "n_test": 14,
+        "mae_patient_mean": 63.39045787545788,
+        "mae_carb_only": 55.19791380853837,
+        "mae_population_linear": 72.71821849335261,
+        "mae_personal_linear": 88.40166547041171
+      },
+      {
+        "pid": 36,
+        "n_train": 14,
+        "n_test": 15,
+        "mae_patient_mean": 59.41705555555555,
+        "mae_carb_only": 59.35830666345948,
+        "mae_population_linear": 60.727547302135136,
+        "mae_personal_linear": 52.30156517091523
+      },
+      {
+        "pid": 38,
+        "n_train": 18,
+        "n_test": 19,
+        "mae_patient_mean": 31.565570175438598,
+        "mae_carb_only": 41.564720973214754,
+        "mae_population_linear": 30.596569096399293,
+        "mae_personal_linear": 41.905939936563776
+      },
+      {
+        "pid": 39,
+        "n_train": 16,
+        "n_test": 17,
+        "mae_patient_mean": 84.60951593137256,
+        "mae_carb_only": 89.3372339642511,
+        "mae_population_linear": 93.70683607202955,
+        "mae_personal_linear": 75.99793925018048
+      },
+      {
+        "pid": 41,
+        "n_train": 23,
+        "n_test": 23,
+        "mae_patient_mean": 45.403846880907366,
+        "mae_carb_only": 46.969389208198486,
+        "mae_population_linear": 53.82800167320328,
+        "mae_personal_linear": 36.8307502125689
+      },
+      {
+        "pid": 42,
+        "n_train": 11,
+        "n_test": 11,
+        "mae_patient_mean": 42.36997245179063,
+        "mae_carb_only": 45.57682050827197,
+        "mae_population_linear": 34.36506160002471,
+        "mae_personal_linear": 53.59056866833191
+      },
+      {
+        "pid": 43,
+        "n_train": 25,
+        "n_test": 26,
+        "mae_patient_mean": 25.995220512820513,
+        "mae_carb_only": 26.09968733574596,
+        "mae_population_linear": 27.29814082043968,
+        "mae_personal_linear": 24.27491096767697
+      },
+      {
+        "pid": 44,
+        "n_train": 19,
+        "n_test": 20,
+        "mae_patient_mean": 25.18093859649123,
+        "mae_carb_only": 22.278635833268368,
+        "mae_population_linear": 24.595673455188614,
+        "mae_personal_linear": 22.890123456025332
+      },
+      {
+        "pid": 45,
+        "n_train": 15,
+        "n_test": 15,
+        "mae_patient_mean": 61.70582222222222,
+        "mae_carb_only": 75.85662393255424,
+        "mae_population_linear": 63.08507516047714,
+        "mae_personal_linear": 80.41885572102336
+      },
+      {
+        "pid": 46,
+        "n_train": 14,
+        "n_test": 14,
+        "mae_patient_mean": 55.70120748299322,
+        "mae_carb_only": 55.65833142966828,
+        "mae_population_linear": 48.44322346001922,
+        "mae_personal_linear": 48.42790358148021
+      },
+      {
+        "pid": 47,
+        "n_train": 14,
+        "n_test": 15,
+        "mae_patient_mean": 51.23907142857144,
+        "mae_carb_only": 57.537243888703486,
+        "mae_population_linear": 47.07173055290463,
+        "mae_personal_linear": 66.50306935561532
+      },
+      {
+        "pid": 48,
+        "n_train": 17,
+        "n_test": 18,
+        "mae_patient_mean": 20.170686274509805,
+        "mae_carb_only": 21.413887055137337,
+        "mae_population_linear": 16.419312815406474,
+        "mae_personal_linear": 21.151327854947436
+      },
+      {
+        "pid": 49,
+        "n_train": 13,
+        "n_test": 14,
+        "mae_patient_mean": 49.22380952380952,
+        "mae_carb_only": 49.239730999967925,
+        "mae_population_linear": 74.069889518688,
+        "mae_personal_linear": 54.86558799419529
+      }
+    ]
+  },
+  "carb_iauc_spearman": {
+    "mean": 0.32551668422534613,
+    "median": 0.2965075679612103,
+    "frac_positive": 1.0,
+    "n_patients": 45,
+    "n_meals": 1579
+  },
+  "iauc_overall_std": 51.91822857346227
+}

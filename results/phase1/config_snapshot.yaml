@@ -1,0 +1,55 @@
+# AahaarTwin — Phase 1 experiment configuration
+# Reproducible data + baseline pipeline. All values recorded in results.
+
+seed: 42
+
+data:
+  raw_dir: "../feas-data/cgmacros_raw/CGMacros"   # extracted CGMacros v1.0.0 (CSV only)
+  bio_csv: "bio.csv"
+  processed_dir: "data/processed"
+  results_dir: "results/phase1"
+
+preprocessing:
+  iauc_window_min: 120          # post-meal window for iAUC / peak / excursion
+  min_post_coverage_iauc: 0.8   # min fraction of window with CGM for iAUC
+  min_post_coverage_peak: 0.5   # min fraction of window with CGM for peak
+  pre_glucose_lookback_min: 15  # nearest non-null glucose within this lookback
+  pre_slope_window_min: 60      # slope fit window (needs >=12 points)
+  pre_context_window_min: 120   # HR / activity context window
+  dedup_min_gap_min: 30         # drop meal rows < this gap after previous meal (same patient)
+  glucose_sensor: "Dexcom GL"   # primary CGM for labels
+  max_physio_glucose_slope: 3.0 # mg/dL/min cap used later (documented, not applied in phase 1)
+
+targets:
+  iauc_2h: "incremental AUC of glucose over 2h post-meal, mg/dL*h, baseline = pre-meal glucose"
+  peak_2h: "max glucose in 2h post-meal, mg/dL"
+  excursion_2h: "1 if peak_2h >= 180 mg/dL else 0"
+
+evaluation:
+  # Leakage-safe: within-patient time-ordered split.
+  # For each patient with >=10 usable meals: first 50% of meals (by time) -> reference,
+  # last 50% -> test. No shuffling, no future-in-train.
+  min_meals_per_patient: 10
+  train_fraction: 0.5
+  # Population models use leave-one-patient-out (test patient never in train).
+  population_eval: "leave_one_patient_out"
+
+meal_types:
+  normalize: true
+  mapping:
+    breakfast: "breakfast"
+    lunch: "lunch"
+    dinner: "dinner"
+    snack: "snack"
+    snacks: "snack"
+    "snack 1": "snack"
+
+citation:
+  dataset: "CGMacros v1.0.0, Gutierrez-Osuna et al., PhysioNet, 2025"
+  doi: "10.13026/3z8q-x658"
+  url: "https://physionet.org/content/cgmacros/"
+  license_note: "Shipped LICENSE.txt is empty (0 bytes, matches published SHA256); license text could not be verified from official files. Raw data is NOT redistributed in this repo; users download from PhysioNet. Cite the dataset and DOI."
+
+notes:
+  - "Research prototype only — not a medical device; not for diagnosis or treatment."
+  - "US cohort (Santa Barbara, CA); no Indian CGM data openly available — proof-of-concept only."
