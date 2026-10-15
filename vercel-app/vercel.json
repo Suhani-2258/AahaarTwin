@@ -1,1 +1,1 @@
-{"functions":{"api/metrics.py":{"maxDuration":10},"api/predict.py":{"maxDuration":10},"api/rank.py":{"maxDuration":10}}}
+{"functions":{"api/index.py":{"maxDuration":30}},"rewrites":[{"destination":"/api/index.py","source":"/api/:path*"}]}
